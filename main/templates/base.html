@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <h1>Hello world</h1>
+    {% block header %}
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+</body>
+<footer class = "to-bottom">
+    {% block footer %}
+    {% endblock %}
+    <div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+      <p class="navbar-text pull-left">© 2017 - Site Fantastic 4
+      </p>
+
+      <a href="https://vk.com/daedroid" class="navbar-btn btn-danger btn pull-right">
+      <span class="glyphicon glyphicon-star"></span>&nbsp; Designed by Daedroid</a>
+    </div>
+  </div>
+</footer>
+</html>
