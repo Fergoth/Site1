@@ -1,0 +1,30 @@
+{% extends "base.html"%}
+{% block content %}
+{% if perms.main.customer%}
+<h1>Ваши заказаные курсовики</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Тема курсовой </th>
+            <th>Универ</th>
+            <th>Минимальная цена</th>
+            <th>Максимальная цена</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for course_work in object_list %}
+    <tr>
+            <td>{{ course_work.topic}} </td>
+            <td>{{course_work.university}}</td>
+            <td>{{course_work.min_price}}</td>
+            <td>{{course_work.max_price}}</td>
+    </tr>
+    </tbody>
+</table>
+{% empty %}
+    <li>У вас нет заказаных работ</li>
+{% endfor %}
+</ul>
+<a href="{% url 'new_course' %}">Заказать новый курсовик</a>
+{%endif%}
+{% endblock %}

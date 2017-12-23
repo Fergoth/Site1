@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'course_work',
     'main',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'courseSite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -22,9 +22,9 @@ def login_user(request):
                 'error': 'Ошибка авторизации',
             })
         else:
-            return render(request,'login.html')
+            return render(request, 'login.html')
     else:
-        return render(request,'login.html')
+        return render(request, 'login.html')
 
 
 def main_page(request):
@@ -40,8 +40,8 @@ def register_user(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             add_perm(user, form.cleaned_data.get('perm'))
-            w = Wallet.objects.create(balanse=0)
-            Profile.objects.create(user=user, wallet=w)
+            p = Profile.objects.create(user=user)
+            Wallet.objects.create(profile=p, balance=0)
             user.profile.save()
             login(request, user)
             return HttpResponseRedirect('/')

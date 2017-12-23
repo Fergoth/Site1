@@ -1,0 +1,10 @@
+{% extends "base.html"%}
+{% block content %}
+<ul>
+{% for course_work in object_list %}
+    <li>{{ course_work.topic}} | {{course_work.university}} | {{course_work.min_price}}|{{course_work.max_price}}</li>
+{% empty %}
+    <li>No articles yet.</li>
+{% endfor %}
+</ul>
+{% endblock %}
