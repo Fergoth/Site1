@@ -78,8 +78,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'courseCite',
-        'USER': 'postgres',
-        'PASSWORD': 'iddqd280764',
+        'USER': 'fergoth',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
