@@ -22,7 +22,7 @@ from course_work.views import CourseView,NewCourseView,AcceptRequestView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', views.login_user),
-    path('register/', views.register_user),
+    path('register/', views.register_user, name='register'),
     path('', views.main_page),
     path('course/', CourseView.as_view()),
     path('course/new', NewCourseView.as_view(), name='new_course'),

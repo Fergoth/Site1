@@ -16,9 +16,9 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/course')
         elif username and password:
-            return render(request,'login.html', {
+            return render(request,'main.html', {
                 'error': 'Ошибка авторизации',
             })
         else:
@@ -28,7 +28,8 @@ def login_user(request):
 
 
 def main_page(request):
-    return HttpResponse('Это главная страница!')
+    logout(request)
+    return render(request, 'main.html')
 
 
 def register_user(request):

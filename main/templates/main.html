@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SderiCursovic</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'main/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{% static 'main/vendor/font-awesome/css/font-awesome.min.css'%}" rel="stylesheet" type="text/css">
+
+
+    <!-- Plugin CSS -->
+    <link href="{% static 'main/vendor/magnific-popup/magnific-popup.css'%}" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="{% static 'main/css/creative.css'%}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span><i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">SderiCursovic</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="#services">Регистрация/Вход</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Связь с нами</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1 id="homeHeading">Самый простой способ сдать курсовую работу</h1>
+                <hr>
+                <p>На SderiCursovic ты можешь заказать работу, которую сделают специально для тебя и тщательно проверят.</p>
+                <h3>Более 500 выполненных заказов</h3>
+                <a href="#services" class="btn btn-primary btn-xl page-scroll">Присоединиться</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">ЗАРЕГИСТРИРУЙСЯ КАК</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-3x fa-pencil text-primary sr-icons"></i>
+                        <h3>ИСПОЛЬНИТЕЛЬ</h3>
+                        <p class="text-muted">Зарабатывай деньги, выполняя заказы.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-3x fa-paper-plane text-primary sr-icons"></i>
+                        <h3>ЗАКАЗЧИК</h3>
+                        <p class="text-muted">Заказывай индивидуальные работы.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-3x fa-thumbs-o-up text-primary sr-icons"></i>
+                        <h3>РЕЦЕНЗЕНТ</h3>
+                        <p class="text-muted">Проверяй готовые курсовые работы.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-lg-offset-2  text-center">
+            	<div class="col-lg-12 text-center">
+            	<h1></h1>
+                	<a href="{% url 'register' %}" class="btn btn-primary btn-xl page-scroll">ЗАРЕГИСТРИРОВАТЬСЯ</a>
+                <div class="text-center"></div>
+            	</div>
+            </div>
+        <section>
+            <div class="row">
+			    <div class="wrapper">
+					    <div class="text-center">
+			            	<h1>Уже зарегистрированы?</h1>
+			            </div>
+			            <hr class="primary">
+			        	<div class="col-lg-4 text-center"></div>
+                		<div class="col-lg-4 text-center">
+                           <form class="form-horizontal " name="LoginForm" action="/login/" method="post">
+                               {% csrf_token %}
+                               <input type="username" class="form-control" name="username" placeholder="Логин" required="" autofocus="" />
+                               <input type="password" class="form-control" name="password" placeholder="Пароль" required=""/>
+                               <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+                               <label class="control-label" for="error">{{error}}</label>
+                           </form>
+					    </div>
+					    <div class="col-lg-4 text-center"></div>
+			  	</div>
+		  	</div>
+		</section>
+        </div>>
+    </section>
+        <aside class="bg-dark">
+        <div class="container text-center">
+            <div class="call-to-action">
+                <h2>Может, понадобиться еще на что-нибудь ссылка</h2>
+                <a href="" class="btn btn-default btn-xl sr-button">Так что пусть пока будет</a>
+            </div>
+        </div>
+    </aside>
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">На связи с вами!</h2>
+                    <hr class="primary">
+                    <p>По всем вопросам и предложениям пишите в поддержку, и мы ответим вам в кратчайшие сроки!</p>
+                </div>
+                <div class="col-lg-12 text-center">
+                    <i class="fa fa-envelope-o fa-3x sr-contact"></i>
+                    <p><a href="mailto:your-email@your-domain.com">feedback@sdericursovic.com</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- jQuery -->
+    <script src="{% static 'main/vendor/jquery/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'main/vendor/bootstrap/js/bootstrap.min.js'%}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static 'main/vendor/scrollreveal/scrollreveal.min.js'%}"></script>
+    <script src="{% static 'main/vendor/magnific-popup/jquery.magnific-popup.min.js'%}"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="{% static 'main/js/creative.js'%}"></script>
+    <!-- Вход-регистрация -->
+
+
+</body>
+
+</html>
