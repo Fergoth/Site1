@@ -3,8 +3,8 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotFound, HttpResponseRedirect
-from .models import Course_Request
-from .forms import NewCourseForm
+from .models import Course_Request,Request_offers
+from .forms import NewCourseForm,AcceptRequestForm
 from django.shortcuts import render
 
 
@@ -18,7 +18,7 @@ class CourseView(ListView):
         if context['object_list']:
             user = self.request.user
             if user.has_perm("main.customer"):
-                context['object_list'] = context['object_list'].filter(owner_user=user.profile) #Если обычный пользователь показываем только его заказыные работы
+                context['object_list'] = context['object_list'].filter(owner_user=user.profile) #Если обычный пользователь показываем только его заказаные работы
         return context #Если исполнитель то возвращаем весь список
     
     @method_decorator(login_required)
@@ -41,9 +41,11 @@ class NewCourseView(View):
                 teacher = form.cleaned_data['teacher']
             min_price= form.cleaned_data['min_price']
             max_price = form.cleaned_data['min_price']
+            description = form.cleaned_data['description']
             c = Course_Request(
                 owner_user=request.user.profile,
                 topic=topic,
+                description=description,
                 university=university,
                 teacher=teacher,
                 min_price=min_price,
@@ -64,3 +66,25 @@ class NewCourseView(View):
             return super(NewCourseView, self).dispatch(request, *args, **kwargs)
         else:
             return HttpResponseNotFound('<h1>No Page Here</h1>')
+
+
+class AcceptRequestView(View):
+    template_name = r'course_work\templates\accept_request.html'
+    
+    def post(self, request, *args, **kwargs):
+        pk = kwargs.pop('pk')
+        qs = Course_Request.objects.filter(pk=pk)
+        form = AcceptRequestForm(request.POST,qs=qs)
+        if form.is_valid():
+            price = form.cleaned_data['price']
+            c = Request_offers(course_request=qs[0], price=int(price),owner_performer=request.user.profile)
+            c.save()
+            return HttpResponseRedirect('/course')
+        return render(request, self.template_name, {'form': form,'qs': qs})
+
+    def get(self,request,*args,**kwargs):
+        pk = kwargs.pop('pk')
+        qs = Course_Request.objects.filter(pk=pk)
+        form = AcceptRequestForm()
+        return render(request, self.template_name, {'form': form, 'qs': qs} )
+    

@@ -1,0 +1,34 @@
+{% extends "base.html"%}
+{% block content %}
+
+{% for post in qs %}
+<h2>Минимальная цена {{post.min_price}} , максимальная цена {{post.max_price}}</h2>
+<h5>
+    Описание:
+</h5>
+
+<text>
+    {{post.description}}
+</text>
+{% endfor %}
+
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Предложить услуги</button>
+  </form>
+{% if form.errors %}
+
+    {% for error in form.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}

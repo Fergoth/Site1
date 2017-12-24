@@ -1,7 +1,11 @@
 {% extends "base.html"%}
 {% block content %}
-{% if perms.main.customer%}
+{%if perms.main.customer %}
 <h1>Ваши заказаные курсовики</h1>
+{%endif%}
+{%if perms.main.performer %}
+<h1>Курсовики на рассмотрении</h1>
+{%endif%}
 <table class="table">
     <thead>
         <tr>
@@ -14,10 +18,20 @@
     <tbody>
 {% for course_work in object_list %}
     <tr>
-            <td>{{ course_work.topic}} </td>
+            <td>{{course_work.topic}} </td>
             <td>{{course_work.university}}</td>
             <td>{{course_work.min_price}}</td>
             <td>{{course_work.max_price}}</td>
+            {%if perms.main.customer %}
+                <td href="{{course_work.pk}}">Отменить заявку</td>
+            {%endif%}
+            {%if perms.main.performer %}
+
+                <form method="get" action="accept/{{course_work.pk}}">
+                    {% csrf_token %}
+                    <td><input type="submit" class="button" value ="Принять заявку"></td>
+                </form>
+            {%endif%}
     </tr>
 
 {% empty %}
@@ -26,6 +40,7 @@
 </tbody>
 </table>
 </ul>
+{%if perms.main.customer %}
 <a href="{% url 'new_course' %}">Заказать новый курсовик</a>
 {%endif%}
 {% endblock %}

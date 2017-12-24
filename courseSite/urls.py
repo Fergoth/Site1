@@ -14,9 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path,re_path
 from . import views
-from course_work.views import CourseView,NewCourseView
+from course_work.views import CourseView,NewCourseView,AcceptRequestView
 
 
 urlpatterns = [
@@ -26,4 +26,5 @@ urlpatterns = [
     path('', views.main_page),
     path('course/', CourseView.as_view()),
     path('course/new', NewCourseView.as_view(), name='new_course'),
+    path('course/accept/<int:pk>', AcceptRequestView.as_view(), name='accept_request'),
 ]
