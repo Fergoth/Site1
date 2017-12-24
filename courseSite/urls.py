@@ -25,5 +25,5 @@ urlpatterns = [
     path('register/', views.register_user),
     path('', views.main_page),
     path('course/', CourseView.as_view()),
-    path('course/new', NewCourseView.as_view(), name='new_course' ),
+    path('course/new', NewCourseView.as_view(), name='new_course'),
 ]

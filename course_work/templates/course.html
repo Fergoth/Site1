@@ -19,11 +19,12 @@
             <td>{{course_work.min_price}}</td>
             <td>{{course_work.max_price}}</td>
     </tr>
-    </tbody>
-</table>
+
 {% empty %}
     <li>У вас нет заказаных работ</li>
 {% endfor %}
+</tbody>
+</table>
 </ul>
 <a href="{% url 'new_course' %}">Заказать новый курсовик</a>
 {%endif%}
