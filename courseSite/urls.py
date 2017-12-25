@@ -27,5 +27,6 @@ urlpatterns = [
     path('course/', CourseView.as_view(), name ='course'),
     path('course/new', NewCourseView.as_view(), name='new_course'),
     path('course/accept/<int:pk>', AcceptRequestView.as_view(), name='accept_request'),
-    path('course/delete/<int:pk>',DeleteRequestView.as_view(), name='delete_request')
+    path('course/delete/<int:pk>',DeleteRequestView.as_view(), name='delete_request'),
+    path('course/choose_performer/<int:pk>/<int:performer_id>',ChooseYourPerformerView.as_view(), name ='choose_performer')
 ]

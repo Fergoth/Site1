@@ -11,7 +11,7 @@ from django.shortcuts import render
 
 class CourseView(ListView):
     model = Course_Request
-    template_name = r'course_work\templates\course.html'
+    template_name = r'course_work/templates/course.html'
    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -37,7 +37,7 @@ class CourseView(ListView):
 
 
 class NewCourseView(View):
-    template_name = r'course_work\templates\new_course.html'
+    template_name = r'course_work/templates/new_course.html'
     
     def post(self,request,*args,**kwargs):
         form = NewCourseForm(request.POST,user=request.user)
@@ -77,7 +77,7 @@ class NewCourseView(View):
 
 
 class AcceptRequestView(View):
-    template_name = r'course_work\templates\accept_request.html'
+    template_name = r'course_work/templates/accept_request.html'
     
     def post(self, request, *args, **kwargs):
         pk = kwargs.pop('pk')
@@ -105,3 +105,16 @@ class DeleteRequestView(View):
             return HttpResponseRedirect('/course')
         #TODO Возвращать сообщение об ошибке
         return HttpResponseRedirect('/course')
+    
+class ChooseYourPerformerView(View):
+    def post(self,request,*args,*kwargs):
+        pk = kwargs.pop('pk')
+        performer = kwargs.pop('preformer')
+        
+        
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.has_perm('main.customer'):
+            return super(NewCourseView, self).dispatch(request, *args, **kwargs)
+        else:
+            return HttpResponseNotFound('<h1>No Page Here</h1>')
