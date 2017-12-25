@@ -3,9 +3,10 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotFound, HttpResponseRedirect
-from .models import Course_Request,Request_offers,Approved_course
+from .models import Course_Request,Request_offers,Approved_course,Transactions
 from .forms import NewCourseForm,AcceptRequestForm
 from django.shortcuts import render
+from main.models import Profile
 
 
 
@@ -52,7 +53,7 @@ class NewCourseView(View):
             else:
                 teacher=''
             min_price = form.cleaned_data['min_price']
-            max_price = form.cleaned_data['min_price']
+            max_price = form.cleaned_data['max_price']
             description = form.cleaned_data['description']
             c = Course_Request(
                 owner_user=request.user.profile,
@@ -128,14 +129,24 @@ class ChooseYourPerformerView(View):
         t=qs[0].topic
         d=qs[0].description
         u=qs[0].university
-        
-        c = Approved_course(price=p,
+        owner =qs2[0].owner_performer
+        c = Approved_course(owner_performer=owner,
+                            price=p,
                             topic =t,
                             description=d,
                             university=u,
                             ready=False,
                             file='')
-        c.save
+        
+        cust =qs[0].owner_user
+        qs3 =Profile.objects.filter(pk = cust.pk)
+        qs3[0].wallet.balance-=p
+        if qs3[0].wallet.balance < 0 :
+            pass
+            #TODO обработать чтобы юзер не получал отрицательный счет :C
+        t = Transactions(from_profile=cust,to_profile=owner,sum=p)
+        c.save()
+        t.save()
         qs.delete()
         return HttpResponseRedirect('/course')
         

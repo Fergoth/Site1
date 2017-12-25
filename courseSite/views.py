@@ -8,7 +8,6 @@ from django.contrib.auth.models import Permission
 from main.models import Wallet, Profile
 
 def login_user(request):
-    logout(request)
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']

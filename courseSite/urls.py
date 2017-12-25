@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', views.login_user),
     path('register/', views.register_user, name='register'),
-    path('', views.main_page),
+    path('', views.main_page,name ='main'),
     path('course/', CourseView.as_view(), name ='course'),
     path('course/new', NewCourseView.as_view(), name='new_course'),
     path('course/accept/<int:pk>', AcceptRequestView.as_view(), name='accept_request'),

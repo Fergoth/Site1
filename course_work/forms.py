@@ -22,7 +22,7 @@ class NewCourseForm(forms.Form):
         if balance < self.cleaned_data['max_price']:
             self.errors['Недостаточно средств']='Недостаточно средств'
             return False
-        if self.cleaned_data['max_price'] < self.cleaned_data['min_price']:
+        if balance < self.cleaned_data['min_price']:
             self.errors['Неверно указаны цены']='Неверно указаны цены'
             return False
         return True
