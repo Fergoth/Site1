@@ -39,7 +39,7 @@ class NewCourseView(View):
                 university = form.cleaned_data['university']
             if form.cleaned_data['teacher']:
                 teacher = form.cleaned_data['teacher']
-            min_price= form.cleaned_data['min_price']
+            min_price = form.cleaned_data['min_price']
             max_price = form.cleaned_data['min_price']
             description = form.cleaned_data['description']
             c = Course_Request(
@@ -79,7 +79,7 @@ class AcceptRequestView(View):
             price = form.cleaned_data['price']
             c = Request_offers(course_request=qs[0], price=int(price),owner_performer=request.user.profile)
             c.save()
-            return HttpResponseRedirect('/course')
+            return HttpResponseRedirect(request,'/course')
         return render(request, self.template_name, {'form': form,'qs': qs})
 
     def get(self,request,*args,**kwargs):
@@ -87,4 +87,13 @@ class AcceptRequestView(View):
         qs = Course_Request.objects.filter(pk=pk)
         form = AcceptRequestForm()
         return render(request, self.template_name, {'form': form, 'qs': qs} )
-    
+
+class DeleteRequestView(View):
+    def post(self,request,*args,**kwargs):
+        pk = kwargs.pop('pk')
+        qs = Course_Request.objects.filter(pk=pk)
+        if request.user.has_perm('main.customer') and qs[0].owner_user == request.user.profile:
+            qs[0].delete()
+            return HttpResponseRedirect('/course')
+        #TODO Возвращать сообщение об ошибке
+        return HttpResponseRedirect('/course')

@@ -12,6 +12,7 @@ class Course_Request(models.Model):
     min_price = models.IntegerField(default=10)
     max_price = models.IntegerField(default=100)
     on_processing = models.BooleanField(default=False)
+    
 
 class Request_offers(models.Model):
     course_request = models.ForeignKey(Course_Request, on_delete=models.CASCADE)

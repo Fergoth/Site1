@@ -40,7 +40,7 @@ class AcceptRequestForm(forms.Form):
         if not valid:
             return valid
         if self.qs[0].min_price > self.cleaned_data['price']:
-            self.errors['Цена ниже минимальной(не любим энтузиастов)']='Цена ниже минимальной'
+            self.errors['Цена ниже минимальной']='Цена ниже минимальной'
             return False
         if self.qs[0].max_price < self.cleaned_data['price']:
             self.errors['Цена выше максимальной']='Цена выше максимальной'

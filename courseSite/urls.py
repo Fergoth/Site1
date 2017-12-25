@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,re_path
 from . import views
-from course_work.views import CourseView,NewCourseView,AcceptRequestView
+from course_work.views import CourseView,NewCourseView,AcceptRequestView,DeleteRequestView
 
 
 urlpatterns = [
@@ -27,4 +27,5 @@ urlpatterns = [
     path('course/', CourseView.as_view()),
     path('course/new', NewCourseView.as_view(), name='new_course'),
     path('course/accept/<int:pk>', AcceptRequestView.as_view(), name='accept_request'),
+    path('course/delete/<int:pk>',DeleteRequestView.as_view(), name='delete_request')
 ]

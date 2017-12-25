@@ -1,12 +1,18 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap-responsive.css' %}">
+<script src="{% static 'bootstrap/js/bootstrap.js'%}"></script>
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <h1>Hello world</h1>
-    {% block header %}
-    {% endblock %}
-</head>
+<div id="nav">
+    <ul>
+        <li><a href="#top">HOME</a></li>
+        <li><a href="#divider">FEATURE SET</a></li>
+        <li><a href="#divider4">WHO ARE WE</a></li>
+        <li><a href="#divider5">INDIEGOGO</a></li>
+        <li><a href="#href">CONTACT US</a></li>
+    </ul>
+</div>
 <body>
     {% block content %}
     {% endblock %}
@@ -23,5 +29,17 @@
       <span class="glyphicon glyphicon-star"></span>&nbsp; Designed by Daedroid</a>
     </div>
   </div>
+    <!-- jQuery -->
+    <script src="{% static 'main/vendor/jquery/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'main/vendor/bootstrap/js/bootstrap.min.js'%}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static 'main/vendor/scrollreveal/scrollreveal.min.js'%}"></script>
+    <script src="{% static 'main/vendor/magnific-popup/jquery.magnific-popup.min.js'%}"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="{% static 'main/js/creative.js'%}"></script>
 </footer>
 </html>

@@ -1,4 +1,5 @@
 {% extends "base.html"%}
+{%debug%}
 {% block content %}
 {%if perms.main.customer %}
 <h1>Ваши заказаные курсовики</h1>
@@ -23,10 +24,14 @@
             <td>{{course_work.min_price}}</td>
             <td>{{course_work.max_price}}</td>
             {%if perms.main.customer %}
-                <td href="{{course_work.pk}}">Отменить заявку</td>
+                <td>
+                <form action="{% url 'delete_request' course_work.pk %}" method ="post">
+                    {% csrf_token %}
+                    <input type ="submit" value="отменить заявку">
+                </form>
+                </td>
             {%endif%}
             {%if perms.main.performer %}
-
                 <form method="get" action="accept/{{course_work.pk}}">
                     {% csrf_token %}
                     <td><input type="submit" class="button" value ="Принять заявку"></td>
