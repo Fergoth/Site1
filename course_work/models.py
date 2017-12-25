@@ -17,7 +17,7 @@ class Course_Request(models.Model):
 class Request_offers(models.Model):
     course_request = models.ForeignKey(Course_Request, on_delete=models.CASCADE)
     owner_performer = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    price = models.IntegerField(default=0)
+    price = models.IntegerField(default=1000)
     
     class Meta:
         unique_together = (("course_request", "owner_performer"),)
