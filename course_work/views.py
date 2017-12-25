@@ -3,7 +3,7 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotFound, HttpResponseRedirect
-from .models import Course_Request,Request_offers
+from .models import Course_Request,Request_offers,Approved_course
 from .forms import NewCourseForm,AcceptRequestForm
 from django.shortcuts import render
 
@@ -111,15 +111,38 @@ class DeleteRequestView(View):
         return HttpResponseRedirect('/course')
     
 class ChooseYourPerformerView(View):
-    def post(self,request,*args,*kwargs):
-        pk = kwargs.pop('pk')
-        performer = kwargs.pop('preformer')
+    def post(self,request,*args,**kwargs):
+        try:
+            pk = kwargs.pop('pk')
+        except KeyError:
+            return HttpResponseRedirect('/course')
+        #TODO Обработать ошибки
+        try:
+            performer = kwargs.pop('performer_id')
+        except KeyError:
+            return HttpResponseRedirect('/course')
+        qs = Course_Request.objects.filter(pk=pk)
+        qs2 = Request_offers.objects.filter(course_request_id=pk)
+        qs2 = qs2.filter(owner_performer=performer)
+        p=qs2[0].price
+        t=qs[0].topic
+        d=qs[0].description
+        u=qs[0].university
         
+        c = Approved_course(price=p,
+                            topic =t,
+                            description=d,
+                            university=u,
+                            ready=False,
+                            file='')
+        c.save
+        qs.delete()
+        return HttpResponseRedirect('/course')
         
-        
+       
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         if request.user.has_perm('main.customer'):
-            return super(NewCourseView, self).dispatch(request, *args, **kwargs)
+            return super().dispatch(request, *args, **kwargs)
         else:
             return HttpResponseNotFound('<h1>No Page Here</h1>')

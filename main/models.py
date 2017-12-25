@@ -21,7 +21,7 @@ class Profile(models.Model):
         
 class Wallet(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE, primary_key=True,default=0)
-    balance = models.IntegerField(default=0)
+    balance = models.IntegerField(default=1000)
 
  
 

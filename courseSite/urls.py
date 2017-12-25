@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,re_path
 from . import views
-from course_work.views import CourseView,NewCourseView,AcceptRequestView,DeleteRequestView
+from course_work.views import CourseView,NewCourseView,AcceptRequestView,DeleteRequestView,ChooseYourPerformerView
 
 
 urlpatterns = [

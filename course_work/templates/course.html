@@ -24,9 +24,14 @@
             <td>{{course_work.min_price}}</td>
             <td>{{course_work.max_price}}</td>
             <td>{% for i in course_work.request_offers_set.all %}
+                {%if perms.main.customer %}
                 {% if i.course_request_id == course_work.id %}
-                    {{i.owner_performer.user.username}} Предложил {{i.price}} <br>
+                    <form method="post" action="{% url 'choose_performer' course_work.pk i.owner_performer_id %}">
+                    {% csrf_token %}
+                    <input type = submit value={{i.owner_performer.user.username}}> Предложил {{i.price}} <br>
+                    </form>
                 {% endif %}
+                {%endif%}
             {% endfor %}
         </td>>
             {%if perms.main.customer %}
