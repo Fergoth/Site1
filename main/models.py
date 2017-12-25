@@ -11,6 +11,7 @@ class Profile(models.Model):
     location = models.CharField(max_length=50, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     rate = models.IntegerField(default=0)
+
     
     class Meta:
         permissions = (("customer", "Базовый пользователь"),

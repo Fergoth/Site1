@@ -23,6 +23,12 @@
             <td>{{course_work.university}}</td>
             <td>{{course_work.min_price}}</td>
             <td>{{course_work.max_price}}</td>
+            <td>{% for i in course_work.request_offers_set.all %}
+                {% if i.course_request_id == course_work.id %}
+                    {{i.owner_performer.user.username}} Предложил {{i.price}} <br>
+                {% endif %}
+            {% endfor %}
+        </td>>
             {%if perms.main.customer %}
                 <td>
                 <form action="{% url 'delete_request' course_work.pk %}" method ="post">
@@ -34,7 +40,11 @@
             {%if perms.main.performer %}
                 <form method="get" action="accept/{{course_work.pk}}">
                     {% csrf_token %}
-                    <td><input type="submit" class="button" value ="Принять заявку"></td>
+                    {%if course_work.id in Request_offers%}
+                        <td>Вы приняли эту заявку</td>
+                    {%else %}
+                        <td><input type="submit" class="button" value ="Принять заявку"></td>
+                        {% endif %}
                 </form>
             {%endif%}
     </tr>

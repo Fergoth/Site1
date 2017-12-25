@@ -18,7 +18,15 @@ class CourseView(ListView):
         if context['object_list']:
             user = self.request.user
             if user.has_perm("main.customer"):
+                qs = Course_Request.objects.all()
                 context['object_list'] = context['object_list'].filter(owner_user=user.profile) #Если обычный пользователь показываем только его заказаные работы
+            if user.has_perm("main.performer"):
+                qs = Request_offers.objects.filter(owner_performer=user.profile)
+                l=[]
+                for q in qs:
+                    l.append(q.course_request_id)
+                if l:
+                    context['Request_offers'] = l
         return context #Если исполнитель то возвращаем весь список
     
     @method_decorator(login_required)
@@ -79,7 +87,7 @@ class AcceptRequestView(View):
             price = form.cleaned_data['price']
             c = Request_offers(course_request=qs[0], price=int(price),owner_performer=request.user.profile)
             c.save()
-            return HttpResponseRedirect(request,'/course')
+            return HttpResponseRedirect('/course')
         return render(request, self.template_name, {'form': form,'qs': qs})
 
     def get(self,request,*args,**kwargs):

@@ -45,7 +45,7 @@ def register_user(request):
             Wallet.objects.create(profile=p, balance=0)
             user.profile.save()
             login(request, user)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/course')
     else:
         form = SignUpForm()
     return render(request, 'register.html', {'form': form})

@@ -6,11 +6,12 @@
 <html lang="ru">
 <div id="nav">
     <ul>
-        <li><a href="#top">HOME</a></li>
+        <li><a href="{% url 'course' %}">{%if perms.main.customer %}Ваши заказаные курсовики{%endif%} {%if perms.main.performer %}Курсовики на рассмотрении{%endif%}</a></li>
         <li><a href="#divider">FEATURE SET</a></li>
         <li><a href="#divider4">WHO ARE WE</a></li>
         <li><a href="#divider5">INDIEGOGO</a></li>
         <li><a href="#href">CONTACT US</a></li>
+        <a> Ваш текущий баланс: {{request.user.profile.wallet.balance}}</a>
     </ul>
 </div>
 <body>

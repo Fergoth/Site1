@@ -24,7 +24,7 @@ urlpatterns = [
     path('login/', views.login_user),
     path('register/', views.register_user, name='register'),
     path('', views.main_page),
-    path('course/', CourseView.as_view()),
+    path('course/', CourseView.as_view(), name ='course'),
     path('course/new', NewCourseView.as_view(), name='new_course'),
     path('course/accept/<int:pk>', AcceptRequestView.as_view(), name='accept_request'),
     path('course/delete/<int:pk>',DeleteRequestView.as_view(), name='delete_request')
