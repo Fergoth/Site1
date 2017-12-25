@@ -45,8 +45,12 @@ class NewCourseView(View):
             topic = form.cleaned_data['topic']
             if form.cleaned_data['university']:
                 university = form.cleaned_data['university']
+            else:
+                university=''
             if form.cleaned_data['teacher']:
                 teacher = form.cleaned_data['teacher']
+            else:
+                teacher=''
             min_price = form.cleaned_data['min_price']
             max_price = form.cleaned_data['min_price']
             description = form.cleaned_data['description']
@@ -110,6 +114,7 @@ class ChooseYourPerformerView(View):
     def post(self,request,*args,*kwargs):
         pk = kwargs.pop('pk')
         performer = kwargs.pop('preformer')
+        
         
         
     @method_decorator(login_required)
