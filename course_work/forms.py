@@ -1,5 +1,5 @@
 from django import forms
-from .models import Request_offers
+from .models import Request_offers,Approved_course
 
 class NewCourseForm(forms.Form):
     topic = forms.CharField(label='Тема курсовика', max_length=60)
@@ -46,3 +46,8 @@ class AcceptRequestForm(forms.Form):
             self.errors['Цена выше максимальной']='Цена выше максимальной'
             return False
         return True
+
+class UploadFileForm(forms.ModelForm):
+    class Meta:
+        model = Approved_course
+        fields = ['file']

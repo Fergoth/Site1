@@ -1,0 +1,62 @@
+{% extends "base.html"%}
+
+{% block content %}
+{%if perms.main.customer %}
+<h1>Ваши заказаные курсовики</h1>
+{%endif%}
+{%if perms.main.performer %}
+<h1>Курсовики на рассмотрении</h1>
+{%endif%}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Тема</th>
+            <th>Цена</th>
+            <th>Универ</th>
+            <th>
+                {%if perms.main.customer %}
+                Исполнитель
+                {%endif%}
+                {%if perms.main.performer %}
+                Заказчик
+                {%endif%}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+{% for course_work in object_list %}
+    {% if not course_work.ready %}
+    <tr>
+            <td>{{course_work.topic}} </td>
+            <td>{{course_work.price}}</td>
+            <td>{{course_work.university}}</td>
+            <td>
+                {%if perms.main.customer %}
+                    {{course_work.owner_performer.user.username}}
+                    {%if course_work.file%}
+                        <a href = {% url 'download' course_work.file %} >Скачать работу</a>
+                    {% endif %}
+                {%endif%}
+                {%if perms.main.performer %}
+                    {{course_work.owner_user.user.username}}
+                    <td>{%if course_work.file%}
+                        Вы загрузили этот курсовик
+                    {% else %}
+
+                    <form method="get" action="{% url 'upload_file' course_work.pk %}">
+                    <input type = submit value="Загрузить курсовик"}>
+                    </form>
+
+                    {% endif %}</td>
+                {%endif%}
+            </td>
+
+    </tr>
+     {% endif %}
+
+{% empty %}
+    <li>У вас нет работ которые надо сделать</li>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

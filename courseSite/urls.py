@@ -16,8 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,re_path
 from . import views
-from course_work.views import CourseView,NewCourseView,AcceptRequestView,DeleteRequestView,ChooseYourPerformerView
-
+from course_work.views import CourseView,NewCourseView,\
+    AcceptRequestView,DeleteRequestView,ChooseYourPerformerView,\
+    CompleteCourseView,upload_file,download
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,5 +31,9 @@ urlpatterns = [
     path('course/new', NewCourseView.as_view(), name='new_course'),
     path('course/accept/<int:pk>', AcceptRequestView.as_view(), name='accept_request'),
     path('course/delete/<int:pk>',DeleteRequestView.as_view(), name='delete_request'),
-    path('course/choose_performer/<int:pk>/<int:performer_id>',ChooseYourPerformerView.as_view(), name ='choose_performer')
+    path('course/choose_performer/<int:pk>/<int:performer_id>',ChooseYourPerformerView.as_view(), name ='choose_performer'),
+    path('complete_course',CompleteCourseView.as_view(), name ='complete_course'),
+    path('upload_file/<int:pk>',upload_file,name='upload_file'),
+    re_path('download/(?P<pk>[0-9])/(?P<path>.*)$',download,name ='download'),
 ]
+urlpatterns+=static(settings.MEDIA_URL, document_root =settings.MEDIA_ROOT)

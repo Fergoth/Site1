@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from main.models import Profile
-
+from django.forms.models import modelform_factory
 
 class Course_Request(models.Model):
     owner_user = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -23,7 +23,8 @@ class Request_offers(models.Model):
         unique_together = (("course_request", "owner_performer"),)
 
 class Approved_course(models.Model):
-    owner_performer = models.ForeignKey(Profile,on_delete=models.SET_NULL,null=True)
+    owner_user = models.ForeignKey(Profile,related_name='owner_user',on_delete=models.CASCADE,null=True)
+    owner_performer = models.ForeignKey(Profile,related_name='owner_performer',on_delete=models.SET_NULL,null=True)
     price = models.IntegerField(default=0)
     topic = models.TextField(max_length=60)
     description = models.TextField(max_length=600, default='')
