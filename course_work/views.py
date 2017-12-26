@@ -150,7 +150,7 @@ class ChooseYourPerformerView(View):
         if qs3.wallet.balance < 0 :
             pass
             #TODO обработать чтобы юзер не получал отрицательный счет :C
-        t = Transactions(course=qs[0],from_profile=cust,to_profile=owner,sum=p)
+        t = Transactions(course=c,from_profile=cust,to_profile=owner,sum=p)
         qs3.wallet.save()
         c.save()
         t.save()
