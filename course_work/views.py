@@ -13,6 +13,7 @@ from django.http import HttpResponse
 
 
 
+
 class CourseView(ListView):
     model = Course_Request
     template_name = r'course_work/templates/course.html'
@@ -149,7 +150,7 @@ class ChooseYourPerformerView(View):
         if qs3.wallet.balance < 0 :
             pass
             #TODO обработать чтобы юзер не получал отрицательный счет :C
-        t = Transactions(from_profile=cust,to_profile=owner,sum=p)
+        t = Transactions(course=qs[0],from_profile=cust,to_profile=owner,sum=p)
         qs3.wallet.save()
         c.save()
         t.save()
@@ -190,6 +191,8 @@ class CompleteCourseView(ListView):
 def upload_file(request, pk):
     if request.method == 'POST':
         a = Approved_course.objects.get(pk=pk)
+        a.ready = True
+        a.save()
         form = UploadFileForm(request.POST, request.FILES,instance=a)
         if form.is_valid():
             form.save()
@@ -203,7 +206,37 @@ def upload_file(request, pk):
 def download(request, path):
     file_path = os.path.join(settings.MEDIA_ROOT, path)
     if os.path.exists(file_path):
+       # a = Transactions.objects.get(course_id=pk)
+      #  p=Profile.objects.get(pk = a.to_profile)
+       # p.wallet.balance+=a.sum
+       # p.wallet.save
         with open(file_path, 'rb') as fh:
             response = HttpResponse(fh.read(), content_type="application/vnd.pdf")
             response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
             return response
+
+
+class RdyCourseView(ListView):
+    model = Approved_course
+    template_name = r'course_work/templates/rdy_course.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if context['object_list']:
+            user = self.request.user
+            if user.has_perm("main.customer"):
+                context['object_list'] = context['object_list'].filter(
+                    owner_user=user.profile)
+            if user.has_perm("main.performer"):
+                context['object_list'] = context['object_list'].filter(
+                    owner_performer=user.profile)
+        
+        return context
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.has_perm(
+                "main.reviewer"):  # Рецензенту нафиг не сдаля этот список
+            return HttpResponseNotFound('<h1>No Page Here</h1>')
+        return super(RdyCourseView, self).dispatch(request, *args,
+                                                        **kwargs)

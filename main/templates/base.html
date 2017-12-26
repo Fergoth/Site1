@@ -8,8 +8,7 @@
     <ul>{% if user.is_authenticated %}
         <li><a href="{% url 'course' %}">{%if perms.main.customer %}Ваши заказаные курсовики{%endif%} {%if perms.main.performer %}Курсовики на рассмотрении{%endif%}</a></li>
         <li><a href="{%url 'complete_course'%}">{%if perms.main.customer %}Курсовики в процессе{%endif%}{%if perms.main.performer %}Курсовики которые вы делаете{%endif%}</a></li>
-        <li><a href="#divider4">Ваши готовые курсовики</a></li>
-        <li><a href="#divider5">INDIEGOGO</a></li>
+        <li><a href="{%url 'rdy_course'%}">Ваши готовые курсовики</a></li>
         <li><a href="{% url 'main' %}">Выход</a></li>
         <a> Ваш текущий баланс: {{request.user.profile.wallet.balance}}</a>
         {%endif%}

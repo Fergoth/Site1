@@ -18,7 +18,7 @@ from django.urls import path,re_path
 from . import views
 from course_work.views import CourseView,NewCourseView,\
     AcceptRequestView,DeleteRequestView,ChooseYourPerformerView,\
-    CompleteCourseView,upload_file,download
+    CompleteCourseView,upload_file,download,RdyCourseView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -33,7 +33,8 @@ urlpatterns = [
     path('course/delete/<int:pk>',DeleteRequestView.as_view(), name='delete_request'),
     path('course/choose_performer/<int:pk>/<int:performer_id>',ChooseYourPerformerView.as_view(), name ='choose_performer'),
     path('complete_course',CompleteCourseView.as_view(), name ='complete_course'),
+    path('rdy_course',RdyCourseView.as_view(), name ='rdy_course'),
     path('upload_file/<int:pk>',upload_file,name='upload_file'),
-    re_path('download/(?P<pk>[0-9])/(?P<path>.*)$',download,name ='download'),
+    re_path('download/(?P<path>.*)$',download,name ='download'),
 ]
 urlpatterns+=static(settings.MEDIA_URL, document_root =settings.MEDIA_ROOT)

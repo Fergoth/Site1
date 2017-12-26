@@ -33,6 +33,7 @@ class Approved_course(models.Model):
     file = models.FileField(upload_to='uploads/',blank=True)
     
 class Transactions(models.Model):
+    course = models.ForeignKey(Approved_course,on_delete=models.SET_NULL,null=True)
     from_profile = models.ForeignKey(Profile,related_name='from_profile',on_delete=models.SET_NULL,null=True)
     to_profile = models.ForeignKey(Profile,related_name='to_profile', on_delete=models.SET_NULL,null=True)
     sum = models.IntegerField(default=0)
